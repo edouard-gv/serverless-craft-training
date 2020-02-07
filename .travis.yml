@@ -1,0 +1,25 @@
+language: python
+python:
+  - '3.7'
+branches:
+  only: master
+install:
+  - pip install awscli
+  - pip install aws-sam-cli
+script:
+  - sam validate
+  - sam package --template-file template.yaml --s3-bucket codedeploy-eu-west-3-344520032411 --output-template-file packaged.yaml
+deploy:
+  provider: script
+  script: sam deploy --template-file packaged.yaml --capabilities CAPABILITY_IAM --stack-name hello-eu-west-3-344520032411
+  skip_cleanup: true
+  on:
+    branch: AWS-lambda-3-travis
+notifications:
+  email:
+    on_failure: always
+env:
+  global:
+    - AWS_DEFAULT_REGION: eu-west-3
+    - access_key_id: $AWS_ACCESS_KEY_ID
+    - secret_access_key: $AWS_SECRET_ACCESS_KEY
