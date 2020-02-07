@@ -14,7 +14,7 @@ deploy:
   script: sam deploy --template-file packaged.yaml --capabilities CAPABILITY_IAM --stack-name hello-eu-west-3-344520032411
   skip_cleanup: true
   on:
-    branch: AWS-lambda-3-travis
+    branch: master
 notifications:
   email:
     on_failure: always
