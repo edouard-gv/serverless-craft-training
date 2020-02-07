@@ -8,10 +8,10 @@ install:
   - pip install aws-sam-cli
 script:
   - sam validate
-  - sam package --template-file template.yaml --s3-bucket codedeploy-eu-west-3-344520032411 --output-template-file packaged.yaml
+  - sam build
 deploy:
   provider: script
-  script: sam deploy --template-file packaged.yaml --capabilities CAPABILITY_IAM --stack-name hello-eu-west-3-344520032411
+  script: sam deploy --region eu-west-3 --capabilities CAPABILITY_IAM --stack-name hello-eu-west-3-344520032411 --s3-bucket codedeploy-eu-west-3-344520032411
   skip_cleanup: true
   on:
     branch: master
